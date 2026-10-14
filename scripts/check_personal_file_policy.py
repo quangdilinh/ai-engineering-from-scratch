@@ -45,11 +45,17 @@ def legacy_capture_log(path: str) -> bool:
     return fnmatch.fnmatchcase(path, "manuals/*/capture/out/*.log")
 
 
+# Upstream educational sandbox test fixture (not a real virtualenv).
+# Do not add generic exceptions for other paths named "env".
+def legacy_environment_fixture(path: str) -> bool:
+    return path == "manuals/docker-sandboxes-101/capture/fixtures/env/sbxenv.yaml"
+
+
 def reject_reason(path: str, size: int = 0, symlink: bool = False) -> str | None:
     normalized = path.replace("\\", "/")
     elements = [part.casefold() for part in normalized.split("/")]
     name = elements[-1]
-    if any(element in BLOCKED_COMPONENTS for element in elements[:-1]):
+    if any(element in BLOCKED_COMPONENTS for element in elements[:-1]) and not legacy_environment_fixture(normalized):
         return "generated, credential or local configuration directory"
     if name in BLOCKED_NAMES:
         return "sensitive or local-only filename"
