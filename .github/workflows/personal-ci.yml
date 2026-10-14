@@ -90,4 +90,4 @@ jobs:
             sha256sum --check -
           tar -xzf "${RUNNER_TEMP}/${archive}" -C "${RUNNER_TEMP}" actionlint
       - name: Validate remaining GitHub Actions workflows
-        run: "${RUNNER_TEMP}/actionlint"
+        run: '"${RUNNER_TEMP}/actionlint"'
