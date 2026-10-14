@@ -37,6 +37,8 @@ class FilePolicyTests(unittest.TestCase):
 
     def test_explicit_exemptions(self):
         self.assert_allowed(".env.example")
+        self.assert_allowed("manuals/docker-sandboxes-101/capture/fixtures/env/sbxenv.yaml")
+        self.assert_blocked("my-roadmaps/demo/env/secret.txt")
         self.assert_allowed("my-roadmaps/enterprise-ai-delivery/README.md")
         self.assert_allowed("manuals/docker-sandboxes-101/capture/out/23-serve-api.log")
         self.assert_blocked("my-roadmaps/demo/records.log")
